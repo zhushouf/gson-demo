@@ -1,0 +1,105 @@
+<!-- page指令可以用于声明页面的编码和页面内容的格式 -->
+<%@page import="com.neuedu.qxcms.service.impl.ProductVersionServiceImpl"%>
+<%@page import="com.neuedu.qxcms.service.impl.IProductVersionService"%>
+<%@page import="com.neuedu.qxcms.bean.ProductVersion"%>
+<%@page import="java.util.List"%>
+<%@page import="com.neuedu.qxcms.service.impl.ProductServiceImpl"%>
+<%@page import="com.neuedu.qxcms.service.impl.IProductCategoryService"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!-- 标签库的使用第一步：下载标签库 -->
+<!-- 标签的使用第二步：在页面中导入标签库 -->
+<!-- 标签的使用第三步：在页面中使用标签库 -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="css/version.css">
+    </head>
+    <body>
+         <nav>
+            <ul>
+                <li>
+                    <a href="aboutus.html"  class="one" target="_blank">关于我们</a>
+                </li>
+                <li>
+                    <a href="index.html" class="two"
+                    target="_blank" >首页</a>
+                </li>
+                <li>
+                    <a href="integral.html" class="three" target="_blank">积分商城</a>
+                </li>
+                <li>
+                    <a href="https://chajian.baidu.com/2015/#home" class="four">应用商店</a>
+                </li>
+                <li>
+                    <a href="http://bbs.liulanqi.baidu.com/portal.php?gw=11" class="five">论坛反馈</a>
+                </li>
+            </ul>
+        </nav>
+    	<div class="con">
+    		<h1 class="logo"></h1>
+    		<div class="main">
+    			<div class="begin">
+    				<span></span>
+    				<span></span>
+    				<span></span>
+                    <span class="txt">下一个新高度</span>
+    			</div>
+    			<!-- 左高亮 -->
+    			<% 	
+    				//1.整合表示层和业务层，调用业务层代码查询数据
+    				//IProductVersionService service = new ProductVersionServiceImpl();
+    				//List<ProductVersion> list = service.findAll();
+    				
+    				//2.循环数据集合，动态生成网页内容 - 动态网页技术是指内容的动态生成，而不是显示或者交互效果
+    				//pageContext.setAttribute("versions", list);//使用内建对象pageContext
+    			
+    			%>   			    			
+    			<c:forEach items="${versions }" var="version" varStatus="status">
+				
+				
+				<!-- 控制时间线的左右输出 -->
+				<c:if test="${status.index mod 2==0 and status.index<3}">
+					<div class=" box left">
+				</c:if>
+				
+				<c:if test="${status.index mod 2==0 and status.index>=3}">
+					<div class=" box left grayl">
+				</c:if>
+				
+				<c:if test="${status.index mod 2==1 and status.index<3}">
+					<div class=" box right">
+				</c:if>
+				
+				
+				
+				
+				<c:if test="${status.index mod 2==1 and status.index>=3}">
+					<div class=" box right grayr">
+				</c:if>
+					<span class="box_icon"></span>
+    				<div class="content">
+						<pre>
+						<h3>${version.versionNo }<span><fmt:formatDate value="${version.productDate }"/></span></h3>
+						${version.productDesc }
+						</pre>
+					</div>
+				</div>
+    			</c:forEach>    
+
+
+				
+                <div class="end">
+                    <span></span>
+                    <span class="txt">百度浏览器</span>
+                </div>
+    		</div>
+    	</div>
+    </body>
+</html>
